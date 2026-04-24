@@ -20,7 +20,7 @@ class CloudScorer:
     def connect_to_cloud(self):
         """Connect to Google Sheets"""
         try:
-            print("🔄 Connecting to Cloud Leaderboard...")
+            print("Connecting to Cloud Leaderboard...")
             
             # Define the scope
             scope = [
@@ -42,19 +42,19 @@ class CloudScorer:
             self.sheet = spreadsheet.sheet1  # Get first sheet
             
             self.connected = True
-            print("✅ Connected to Cloud Leaderboard!")
+            print("Connected to Cloud Leaderboard!")
             
         except FileNotFoundError:
-            print("⚠️  credentials.json not found in project folder.")
-            print("    Using local CSV backup instead.")
+            print("credentials.json not found in project folder.")
+            print("Using local CSV backup instead.")
             self.connected = False
         except gspread.exceptions.APIError as e:
-            print(f"⚠️  Google Sheets API Error: {e}")
-            print("    Using local CSV backup instead.")
+            print(f"Google Sheets API Error: {e}")
+            print("Using local CSV backup instead.")
             self.connected = False
         except Exception as e:
-            print(f"⚠️  Cloud connection failed: {e}")
-            print("    Using local CSV backup instead.")
+            print(f"Cloud connection failed: {e}")
+            print("Using local CSV backup instead.")
             self.connected = False
     
     def save_score(self, username, score, total):
@@ -65,7 +65,7 @@ class CloudScorer:
         # Try cloud first
         if self.connected and self.sheet:
             try:
-                print(f"💾 Saving {username}'s score to cloud...")
+                print(f"Saving {username}'s score to cloud...")
                 
                 self.sheet.append_row([
                     username,
@@ -75,12 +75,12 @@ class CloudScorer:
                     timestamp
                 ])
                 
-                print(f"✅ Score saved to cloud for {username}!")
+                print(f"Score saved to cloud for {username}!")
                 return True
                 
             except Exception as e:
-                print(f"⚠️  Cloud save failed: {e}")
-                print("    Saving to local CSV instead...")
+                print(f"Cloud save failed: {e}")
+                print("Saving to local CSV instead...")
         
         # Fallback to local CSV
         self.save_to_local_csv(username, score, total, percentage, timestamp)
